@@ -4,6 +4,54 @@
              xmlns:local="clr-namespace:SlideItHelper"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
-    </Application.Resources>
+		<!--Page Header Stylings-->
+		<Style x:Key="slideItTitleLabel">
+			<Setter Property="Label.HorizontalAlignment" Value="Center" />
+			<Setter Property="Label.FontSize" Value="52"/>
+			<Setter Property="Label.FontWeight" Value="Bold" />
+			<Setter Property="Label.FontFamily" Value="Cambria" />
+			<Setter Property="Label.Foreground" Value="#0F0F4C" />
+		</Style>
+		<Style x:Key="pageTitleLabel">
+			<Setter Property="Label.HorizontalAlignment" Value="Center" />
+			<Setter Property="Label.FontSize" Value="30"/>
+			<Setter Property="Label.FontWeight" Value="Bold" />
+			<Setter Property="Label.FontFamily" Value="Cambria" />
+			<Setter Property="Label.Foreground" Value="#0F0F4C" />
+		</Style>
+		
+		<!--General Stylings-->
+		<Style x:Key="buttonStyle">
+			<Setter Property="Label.FontSize" Value="18"/>
+			<Setter Property="Label.FontFamily" Value="Cambria" />
+			<Setter Property="Label.Foreground" Value="#0F0F4C" />
+			<Setter Property="Button.Width" Value="Auto" />
+			<Setter Property="Button.HorizontalAlignment" Value="Right" />
+			<Setter Property="Button.Padding" Value="5" />
+			<Setter Property="Button.Background" Value="#80D1EF" />
+		</Style>
+		
+		<!--AddTextForm Stylings-->
+		<Style x:Key="inputFormLabel">
+			<Setter Property="Label.HorizontalAlignment" Value="Right" />
+			<Setter Property="Label.FontSize" Value="18"/>
+			<Setter Property="Label.FontFamily" Value="Cambria" />
+			<Setter Property="Label.Foreground" Value="#0F0F4C" />
+			<Setter Property="Label.Margin" Value="0,10,30,10" />
+		</Style>
+
+		<Style x:Key="inputFormTitleTextBox" >
+			<Setter Property="Label.FontSize" Value="18"/>
+			<Setter Property="Label.FontFamily" Value="Cambria" />
+			<Setter Property="Label.Foreground" Value="#0F0F4C" />
+			<Setter Property="Label.VerticalAlignment" Value="Center" />
+		</Style>
+
+		<Style x:Key="inputFormContentTextBox" >
+			<Setter Property="TextBlock.Margin" Value="0,12,0,10" />
+			<Setter Property="Label.FontSize" Value="18"/>
+			<Setter Property="Label.FontFamily" Value="Cambria" />
+			<Setter Property="Label.Foreground" Value="#0F0F4C" />
+		</Style>
+	</Application.Resources>
 </Application>

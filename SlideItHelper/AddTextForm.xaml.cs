@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace SlideItHelper
 {
 	/// <summary>
-	/// Interaction logic for MainWindow.xaml
+	/// Interaction logic for AddTextInput.xaml
 	/// </summary>
-	public partial class MainWindow : NavigationWindow
+	public partial class AddTextInput : Page
 	{
-		public MainWindow()
+		public AddTextInput()
 		{
 			InitializeComponent();
 		}
