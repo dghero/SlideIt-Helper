@@ -37,11 +37,11 @@ namespace SlideItHelper
 		{
 			this.searchTerm = searchTerm;
 			Debug.WriteLine(searchTerm);
-			//Get_Images_Request(search_term);
+			GetImagesRequest(searchTerm);
 			InitializeComponent();
 		}
 
-		private void Get_Images_Request(string query)
+		private void GetImagesRequest(string query)
 		{
 			//Get variable from .env file (needs to be in same folder as .exe)
 			string access_key = Environment.GetEnvironmentVariable("UNSPLASH_ACCESS_KEY");
@@ -64,7 +64,7 @@ namespace SlideItHelper
 			JObject jsonObj = JObject.Parse(dummyDataString);
 
 			////Populate image choices; expect 10 results, but may be smaller
-			for (var i = 0; i < 10; i++)
+			for (var i = 0; i < 3; i++)
 			{
 				try
 				{
@@ -75,6 +75,8 @@ namespace SlideItHelper
 					var clientSmall = new RestClient(url);
 					var requestSmall = new RestRequest("", Method.GET);
 					clientSmall.DownloadData(requestSmall).SaveAs(file);
+
+					imagePaths.Add(file);
 				}
 				catch (Exception err)
 				{
@@ -84,7 +86,7 @@ namespace SlideItHelper
 			foreach (string path in imagePaths)
 			{
 				Debug.WriteLine(path);
-				DeleteTmpFile(path); //preemptively delete for testing
+				//DeleteTmpFile(path); //preemptively delete for testing
 			}
 		}
 
