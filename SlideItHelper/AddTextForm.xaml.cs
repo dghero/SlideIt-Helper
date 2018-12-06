@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace SlideItHelper
 {
@@ -27,14 +28,33 @@ namespace SlideItHelper
 
 		private void Next_Page(object sender, RoutedEventArgs e)
 		{
-			//TODO: Extract bold text instead of just plaintext
-			string searchTerm = this.titleText.Text 
+			string searchQuery = this.titleText.Text 
 				+ " " 
-				+ StringFromRichTextBox(this.contentText);
-			System.Diagnostics.Debug.WriteLine("Result of Next_Page(): " + searchTerm);
+				+ BoldedTextFromRichTextBox(this.contentText);
 
-			AddImagesForm addImagesForm = new AddImagesForm(searchTerm);
+			AddImagesForm addImagesForm = new AddImagesForm(searchQuery);
 			this.NavigationService.Navigate(addImagesForm);
+		}
+
+		private string BoldedTextFromRichTextBox(RichTextBox rtb)
+		{
+			string results = "";
+			foreach (Paragraph p in rtb.Document.Blocks)
+			{
+				foreach (var inline in p.Inlines)
+				{
+					Debug.WriteLine("Segment:[" + inline + "]");
+					if (inline is Bold || inline.FontWeight == FontWeights.Bold)
+					{
+						TextRange textRange = new TextRange(
+							inline.ContentStart,
+							inline.ContentEnd
+						);
+						results += textRange.Text + " ";
+					}
+				}
+			}
+			return results;
 		}
 
 		/* StringFromRichTextBox()
@@ -44,14 +64,9 @@ namespace SlideItHelper
 		private string StringFromRichTextBox(RichTextBox rtb)
 		{
 			TextRange textRange = new TextRange(
-				// TextPointer to the start of content in the RichTextBox.
 				rtb.Document.ContentStart,
-				// TextPointer to the end of content in the RichTextBox.
 				rtb.Document.ContentEnd
 			);
-
-			// The Text property on a TextRange object returns a string
-			// representing the plain text content of the TextRange.
 			return textRange.Text;
 		}
 	}

@@ -43,24 +43,25 @@ namespace SlideItHelper
 
 		private void Get_Images_Request(string query)
 		{
+			//Get variable from .env file (needs to be in same folder as .exe)
 			string access_key = Environment.GetEnvironmentVariable("UNSPLASH_ACCESS_KEY");
 
 			////Unsplash API Request
-			
+			/*
 			var client = new RestClient("https://api.unsplash.com");
 			//TODO: Get keywords into request string, serialize for web
 			var reqString = "search/collections?query=cats&client_id=" + access_key;
 			Debug.WriteLine(reqString);
 			var request = new RestRequest(reqString, Method.GET);
-			
+
 			IRestResponse response = client.Execute(request);
 			var content = response.Content;
 
 			JObject jsonObj = JObject.Parse(content);
-			
+			*/
 
 			////Or use dummy data for testing
-			//JObject jsonObj = JObject.Parse(dummyDataString);
+			JObject jsonObj = JObject.Parse(dummyDataString);
 
 			////Populate image choices; expect 10 results, but may be smaller
 			for (var i = 0; i < 10; i++)
@@ -68,16 +69,11 @@ namespace SlideItHelper
 				try
 				{
 					string url = jsonObj["results"][i]["preview_photos"][0]["urls"]["small"].ToString();
-					string testo = "sample " + i;
-					Debug.WriteLine(testo);
-					Debug.WriteLine(url);
 
 					string file = CreateTmpFile();
-					Debug.WriteLine(file);
 
 					var clientSmall = new RestClient(url);
 					var requestSmall = new RestRequest("", Method.GET);
-
 					clientSmall.DownloadData(requestSmall).SaveAs(file);
 				}
 				catch (Exception err)
@@ -88,7 +84,7 @@ namespace SlideItHelper
 			foreach (string path in imagePaths)
 			{
 				Debug.WriteLine(path);
-				DeleteTmpFile(path);
+				DeleteTmpFile(path); //preemptively delete for testing
 			}
 		}
 
@@ -121,11 +117,11 @@ namespace SlideItHelper
 				// to optimize the use of Temporary files by keeping them cached in memory.
 				fileInfo.Attributes = FileAttributes.Temporary;
 
-				Console.WriteLine("TEMP file created at: " + fileName);
+				//Console.WriteLine("TEMP file created at: " + fileName);
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine("Unable to create TEMP file or set its attributes: " + ex.Message);
+				//Console.WriteLine("Unable to create TEMP file or set its attributes: " + ex.Message);
 			}
 
 			return fileName;
@@ -140,12 +136,11 @@ namespace SlideItHelper
 				streamWriter.WriteLine(data);
 				streamWriter.Flush();
 				streamWriter.Close();
-
-				Console.WriteLine("TEMP file updated.");
+				//Console.WriteLine("TEMP file updated.");
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine("Error writing to TEMP file: " + ex.Message);
+				//Console.WriteLine("Error writing to TEMP file: " + ex.Message);
 			}
 		}
 
@@ -157,12 +152,12 @@ namespace SlideItHelper
 				if (File.Exists(tmpFile))
 				{
 					File.Delete(tmpFile);
-					Console.WriteLine("TEMP file deleted.");
+					//Console.WriteLine("TEMP file deleted.");
 				}
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine("Error deleteing TEMP file: " + ex.Message);
+				//Console.WriteLine("Error deleteing TEMP file: " + ex.Message);
 			}
 		}
 
