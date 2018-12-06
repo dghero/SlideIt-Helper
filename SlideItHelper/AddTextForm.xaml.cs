@@ -28,12 +28,12 @@ namespace SlideItHelper
 		private void Next_Page(object sender, RoutedEventArgs e)
 		{
 			//TODO: Extract bold text instead of just plaintext
-			string search_term = this.titleText.Text 
+			string searchTerm = this.titleText.Text 
 				+ " " 
 				+ StringFromRichTextBox(this.contentText);
-			System.Diagnostics.Debug.WriteLine("Result of Next_Page(): " + search_term);
+			System.Diagnostics.Debug.WriteLine("Result of Next_Page(): " + searchTerm);
 
-			AddImagesForm addImagesForm = new AddImagesForm(search_term);
+			AddImagesForm addImagesForm = new AddImagesForm(searchTerm);
 			this.NavigationService.Navigate(addImagesForm);
 		}
 

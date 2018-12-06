@@ -19,17 +19,36 @@
 			</Grid.ColumnDefinitions>
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
 				<RowDefinition />
 			</Grid.RowDefinitions>
 
-			<Button 
-				Grid.Column="0" 
-				Grid.Row="0" 
-				Click="Button_Click" 
-				Style="{StaticResource buttonStyle}"
-			>
-				Debug
-			</Button>
+			<Label Grid.Column="0" Grid.Row="0" Style="{StaticResource slideItTitleLabel}">
+				SlideIt Helper
+			</Label>
+			<Label Grid.Column="0" Grid.Row="1" Style="{StaticResource pageTitleLabel}" >
+				Slide Images
+			</Label>
+
+			<Grid Grid.Column="0" Grid.Row="2" Margin="40">
+
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition  />
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+
+				<Button 
+					Grid.Column="0" 
+					Grid.Row="1" 
+					Click="Button_Click" 
+					Style="{StaticResource buttonStyle}"
+				>
+					Debug
+				</Button>
+			</Grid>
 		</Grid>
 	</Grid>
 </Page>
