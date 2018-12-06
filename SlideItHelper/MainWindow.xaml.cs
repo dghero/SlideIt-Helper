@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using dotenv.net;
 
 namespace SlideItHelper
 {
@@ -22,6 +23,7 @@ namespace SlideItHelper
 	{
 		public MainWindow()
 		{
+			DotEnv.Config();
 			InitializeComponent();
 		}
 	}

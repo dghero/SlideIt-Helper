@@ -13,7 +13,7 @@
 			<ImageBrush ImageSource="background.jpg" />
 		</Grid.Background>
 
-		<Grid Margin="30,0,30,30">
+		<Grid Style="{StaticResource pageMargins}">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition />
 			</Grid.ColumnDefinitions>
@@ -46,7 +46,11 @@
 					Slide Title
 				</Label>
 
-				<TextBox Grid.Column="1" Grid.Row="0" Style="{StaticResource inputFormTitleTextBox}">
+				<TextBox 
+					Name="titleText"
+					Grid.Column="1" 
+					Grid.Row="0" 
+					Style="{StaticResource inputFormTitleTextBox}">
 					
 				</TextBox>
 
@@ -56,9 +60,21 @@
 					Slide Content
 				</Label>
 
-				<RichTextBox Grid.Column="1" Grid.Row="1" Style="{StaticResource inputFormContentTextBox}" />
+				<RichTextBox 
+					Name="contentText"
+					Grid.Column="1" 
+					Grid.Row="1" 
+					Style="{StaticResource inputFormContentTextBox}" 
+				/>
 
-				<Button Grid.Column="1" Grid.Row="2" Style="{StaticResource buttonStyle}">Next</Button>
+				<Button 
+					Grid.Column="1" 
+					Grid.Row="2" 
+					Style="{StaticResource buttonStyle}"
+					Click="Next_Page"
+				>
+					Next
+				</Button>
 			</Grid>
 
 		</Grid>
