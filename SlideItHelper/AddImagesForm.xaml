@@ -44,20 +44,36 @@
 				<Grid Name="imageGrid">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition />
-						<ColumnDefinition />
-						<ColumnDefinition />
-						<ColumnDefinition />
-						<ColumnDefinition />
 
 					</Grid.ColumnDefinitions>
 					<Grid.RowDefinitions>
 						<RowDefinition  />
-						<RowDefinition  />
 						<RowDefinition Height="10" />
 					</Grid.RowDefinitions>
-					<Image Grid.Column="0" Source="C:\Users\Cripple-Supreme\AppData\Local\Temp\tmp4CE0.tmp"></Image>
-					<Image Grid.Column="1" Source="C:\Users\Cripple-Supreme\AppData\Local\Temp\tmp4DBC.tmp"></Image>
-					
+
+					<ListBox 
+						Name="imageSelections" 
+						SelectionMode="Multiple" 
+						ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+					>
+						<ListBox.ItemsPanel>
+							<ItemsPanelTemplate>
+								<WrapPanel Orientation="Horizontal" />
+							</ItemsPanelTemplate>
+						</ListBox.ItemsPanel>
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<Grid Height="150" Width="150" VerticalAlignment="Center">
+									<Image
+										Source="{Binding LocalThumbPath}" 
+										HorizontalAlignment="Center" 
+										VerticalAlignment="Center"
+										MaxHeight="150" 
+										MaxWidth="150"/>
+								</Grid>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
 				</Grid>
 				
 				<Button 

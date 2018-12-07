@@ -37,8 +37,8 @@ namespace SlideItHelper
 		{
 			this.searchTerm = searchTerm;
 			Debug.WriteLine(searchTerm);
-			GetImagesRequest(searchTerm);
 			InitializeComponent();
+			GetImagesRequest(searchTerm);
 		}
 
 		public class SearchImage{
@@ -46,6 +46,10 @@ namespace SlideItHelper
 			public string FullImgUrl { get; set; }
 			public string Photographer { get; set; }
 			public string PhotographerProfile { get; set; }
+			public override string ToString()
+			{
+				return this.LocalThumbPath;
+			}
 		}
 
 		private void GetImagesRequest(string query)
@@ -71,7 +75,7 @@ namespace SlideItHelper
 			JObject jsonObj = JObject.Parse(dummyDataString);
 
 			////Populate image choices; expect 10 results, but may be smaller
-			for (var i = 0; i < 3; i++)
+			for (var i = 0; i < 10; i++)
 			{
 				try
 				{
@@ -92,8 +96,7 @@ namespace SlideItHelper
 						LocalThumbPath = file,
 						FullImgUrl = jsonObj["results"][i]["preview_photos"][0]["urls"]["regular"].ToString(),
 						Photographer = jsonObj["results"][i]["user"]["name"].ToString(),
-						PhotographerProfile = jsonObj["results"][i]["user"]["links"]["html"].ToString() 
-						//PhotographerProfile = jsonObj["results"][i]["user"]["links"]["html"].ToString() + "?utm_source=SlideIt%20Helper&utm_medium=referral"
+						PhotographerProfile = jsonObj["results"][i]["user"]["links"]["html"].ToString() // + "?utm_source=SlideIt%20Helper&utm_medium=referral"
 					});
 				}
 				catch (Exception err)
@@ -101,10 +104,11 @@ namespace SlideItHelper
 					imagePaths.Add(null);
 				}
 			}
+			imageSelections.ItemsSource = imagePaths;
 			foreach (SearchImage img in imagePaths)
 			{
 				Debug.WriteLine(img.LocalThumbPath);
-				DeleteTmpFile(img.LocalThumbPath); //preemptively delete for testing purposes
+				//DeleteTmpFile(img.LocalThumbPath); //preemptively delete for testing purposes
 			}
 		}
 
