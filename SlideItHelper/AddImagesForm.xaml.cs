@@ -19,6 +19,7 @@ using System.IO;
 using RestSharp;
 using RestSharp.Extensions;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 using System.Json;
 
@@ -60,8 +61,11 @@ namespace SlideItHelper
 			//Setup API vars
 			JObject jsonObj = new JObject();
 			var client = new RestClient("https://api.unsplash.com");
-			//TODO: Get keywords into request string, serialize for web
-			var reqString = "search/collections?query=" + "cats" + "&per_page=10&client_id=" + access_key;
+			int resultsPerPage = 10;
+			string serialQuery = JsonConvert.SerializeObject(query);
+			string reqString = "search/collections?query=" + serialQuery
+				+ "&per_page=" + resultsPerPage 
+				+ "&client_id=" + access_key;
 			var request = new RestRequest(reqString, Method.GET);
 
 			////Unsplash API Request

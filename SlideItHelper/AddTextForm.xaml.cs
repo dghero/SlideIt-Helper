@@ -43,7 +43,6 @@ namespace SlideItHelper
 			{
 				foreach (var inline in p.Inlines)
 				{
-					Debug.WriteLine("Segment:[" + inline + "]");
 					if (inline is Bold || inline.FontWeight == FontWeights.Bold)
 					{
 						TextRange textRange = new TextRange(
