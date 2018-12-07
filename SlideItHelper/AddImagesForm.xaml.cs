@@ -54,35 +54,39 @@ namespace SlideItHelper
 
 		private void GetImagesRequest(string query)
 		{
-			//Get variable from .env file (needs to be in same folder as .exe)
+			//Get environment variable from .env file (needs to be in same folder as .exe)
 			string access_key = Environment.GetEnvironmentVariable("UNSPLASH_ACCESS_KEY");
 
-			////Unsplash API Request
-			/*
+			//Setup API vars
+			JObject jsonObj = new JObject();
 			var client = new RestClient("https://api.unsplash.com");
 			//TODO: Get keywords into request string, serialize for web
-			var reqString = "search/collections?query=cats&client_id=" + access_key;
-			Debug.WriteLine(reqString);
+			var reqString = "search/collections?query=" + "cats" + "&per_page=10&client_id=" + access_key;
 			var request = new RestRequest(reqString, Method.GET);
 
-			IRestResponse response = client.Execute(request);
-			var content = response.Content;
-
-			JObject jsonObj = JObject.Parse(content);
-			*/
-
+			////Unsplash API Request
+			try
+			{
+				IRestResponse response = client.Execute(request);
+				var content = response.Content;
+				jsonObj = JObject.Parse(content);
+			}
+			catch(Exception err)
+			{
+				Console.WriteLine("Error fetching images from web: " + err.Message);
+			}
+			
 			////Or use dummy data for testing
-			JObject jsonObj = JObject.Parse(dummyDataString);
-
-			////Populate image choices; expect 10 results, but may be smaller
-			for (var i = 0; i < 10; i++)
+			//JObject jsonObj = JObject.Parse(dummyDataString);
+			
+			JArray jsonArr = (JArray)jsonObj["results"];
+			for (var i = 0; i < jsonArr.Count; i++)
 			{
 				try
 				{
-					//Get info for p
 					string url = jsonObj["results"][i]["preview_photos"][0]["urls"]["small"].ToString();
 
-					//fetch thumbnail
+					//fetch thumbnail as a displayable file
 					string file = CreateTmpFile();
 					var clientSmall = new RestClient(url);
 					var requestSmall = new RestRequest("", Method.GET);
@@ -101,20 +105,15 @@ namespace SlideItHelper
 				}
 				catch (Exception err)
 				{
-					imagePaths.Add(null);
+					Console.WriteLine("Error adding image to list: " + err.Message);
 				}
 			}
 			imageSelections.ItemsSource = imagePaths;
-			foreach (SearchImage img in imagePaths)
-			{
-				Debug.WriteLine(img.LocalThumbPath);
-				//DeleteTmpFile(img.LocalThumbPath); //preemptively delete for testing purposes
-			}
 		}
 
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
-			
+		
 		}
 
 		/* TEMPFILE FUNCTIONS

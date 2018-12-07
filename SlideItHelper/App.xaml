@@ -33,6 +33,11 @@
 			<Setter Property="Button.Padding" Value="5" />
 			<Setter Property="Button.Background" Value="#80D1EF" />
 		</Style>
+
+		<Style x:Key="textStyle">
+			<Setter Property="Label.FontFamily" Value="Cambria" />
+			<Setter Property="Label.Foreground" Value="#0F0F4C" />
+		</Style>
 		
 		<!--AddTextForm Stylings-->
 		<Style x:Key="inputFormLabel">

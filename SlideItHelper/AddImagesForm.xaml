@@ -39,6 +39,8 @@
 				<Grid.RowDefinitions>
 					<RowDefinition  />
 					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="10" />
+					<RowDefinition Height="Auto"/>
 				</Grid.RowDefinitions>
 
 				<Grid Name="imageGrid">
@@ -48,7 +50,6 @@
 					</Grid.ColumnDefinitions>
 					<Grid.RowDefinitions>
 						<RowDefinition  />
-						<RowDefinition Height="10" />
 					</Grid.RowDefinitions>
 
 					<ListBox 
@@ -75,14 +76,22 @@
 						</ListBox.ItemTemplate>
 					</ListBox>
 				</Grid>
+
+				<TextBlock 
+					Grid.Row="1"
+					Style="{StaticResource textStyle}"
+					VerticalAlignment="Top"
+					HorizontalAlignment="Right"
+					FontSize="8"
+				>Photos by Unsplash</TextBlock>
 				
 				<Button 
 					Grid.Column="0" 
-					Grid.Row="1" 
+					Grid.Row="3" 
 					Click="Button_Click" 
 					Style="{StaticResource buttonStyle}"
 				>
-					Debug
+					Generate Slide
 				</Button>
 			</Grid>
 		</Grid>
