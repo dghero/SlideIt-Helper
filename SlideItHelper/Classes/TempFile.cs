@@ -38,7 +38,7 @@ namespace SlideItHelper.Classes
 			}
 			catch (Exception ex)
 			{
-				//Console.WriteLine("Unable to create TEMP file or set its attributes: " + ex.Message);
+				Console.WriteLine("Unable to create TEMP file or set its attributes: " + ex.Message);
 			}
 
 			return fileName;
@@ -57,7 +57,7 @@ namespace SlideItHelper.Classes
 			}
 			catch (Exception ex)
 			{
-				//Console.WriteLine("Error writing to TEMP file: " + ex.Message);
+				Console.WriteLine("Error writing to TEMP file: " + ex.Message);
 			}
 		}
 
@@ -69,12 +69,12 @@ namespace SlideItHelper.Classes
 				if (File.Exists(tmpFile))
 				{
 					File.Delete(tmpFile);
-					//Console.WriteLine("TEMP file deleted.");
+					Console.WriteLine("TEMP file deleted.");
 				}
 			}
 			catch (Exception ex)
 			{
-				//Console.WriteLine("Error deleteing TEMP file: " + ex.Message);
+				Console.WriteLine("Error deleteing TEMP file: " + ex.Message);
 			}
 		}
 	}

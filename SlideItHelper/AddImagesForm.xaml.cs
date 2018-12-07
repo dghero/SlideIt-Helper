@@ -45,12 +45,13 @@ namespace SlideItHelper
 		public class SearchImage
 		{
 			public string LocalThumbPath { get; set; }
+			public string Description { get; set; }
 			public string FullImgUrl { get; set; }
 			public string Photographer { get; set; }
 			public string PhotographerProfile { get; set; }
 			public override string ToString()
 			{
-				return this.LocalThumbPath;
+				return this.Description;
 			}
 		}
 
@@ -79,6 +80,7 @@ namespace SlideItHelper
 					imagePaths.Add(new SearchImage()
 					{
 						LocalThumbPath = file,
+						Description = jsonObj["results"][i]["description"].ToString(),
 						FullImgUrl = jsonObj["results"][i]["urls"]["regular"].ToString(),
 						Photographer = jsonObj["results"][i]["user"]["name"].ToString(),
 						PhotographerProfile = jsonObj["results"][i]["user"]["links"]["html"].ToString() // + "?utm_source=SlideIt%20Helper&utm_medium=referral"
@@ -99,7 +101,7 @@ namespace SlideItHelper
 
 			JObject jsonObj = new JObject();
 			var client = new RestClient("https://api.unsplash.com");
-			int resultsPerPage = 10;
+			int resultsPerPage = 3;
 			string serialQuery = JsonConvert.SerializeObject(query);
 			string reqString = "search/photos?query=" + serialQuery
 				+ "&per_page=" + resultsPerPage
@@ -123,7 +125,25 @@ namespace SlideItHelper
 
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
+			List<SearchImage> allItems = new List<SearchImage>();
+			List<SearchImage> selected = new List<SearchImage>();
 
+			foreach(SearchImage item in imageSelections.Items)
+			{
+				allItems.Add(item);
+			}
+			foreach(SearchImage item in imageSelections.SelectedItems)
+			{
+				selected.Add(item);
+			}
+
+			imageSelections.ItemsSource = null;
+			foreach (SearchImage item in allItems)
+			{
+				TempFile.DeleteTmpFile(item.LocalThumbPath);
+			}
+
+			Debug.WriteLine("with the Resto");
 		}
 
 	}
