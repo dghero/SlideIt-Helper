@@ -37,9 +37,8 @@ namespace SlideItHelper
 		public AddImagesForm(string searchTerm)
 		{
 			this.searchTerm = searchTerm;
-			Debug.WriteLine(searchTerm);
 			InitializeComponent();
-			GetImagesRequest(searchTerm);
+			GetImages(searchTerm);
 		}
 
 		public class SearchImage{
@@ -53,34 +52,9 @@ namespace SlideItHelper
 			}
 		}
 
-		private void GetImagesRequest(string query)
+		private void GetImages(string query)
 		{
-			//Get environment variable from .env file (needs to be in same folder as .exe)
-			string access_key = Environment.GetEnvironmentVariable("UNSPLASH_ACCESS_KEY");
-
-			//Setup API vars
-			JObject jsonObj = new JObject();
-			var client = new RestClient("https://api.unsplash.com");
-			int resultsPerPage = 10;
-			string serialQuery = JsonConvert.SerializeObject(query);
-			string reqString = "search/collections?query=" + serialQuery
-				+ "&per_page=" + resultsPerPage 
-				+ "&client_id=" + access_key;
-			var request = new RestRequest(reqString, Method.GET);
-
-			////Unsplash API Request
-			try
-			{
-				IRestResponse response = client.Execute(request);
-				var content = response.Content;
-				jsonObj = JObject.Parse(content);
-			}
-			catch(Exception err)
-			{
-				Console.WriteLine("Error fetching images from web: " + err.Message);
-			}
-			
-			////Or use dummy data for testing
+			JObject jsonObj = GetUnsplashImgList(query);
 			//JObject jsonObj = JObject.Parse(dummyDataString);
 			
 			JArray jsonArr = (JArray)jsonObj["results"];
@@ -100,6 +74,7 @@ namespace SlideItHelper
 					 * Unsplash, the original photographer, and linking their profile with a referral
 					 * parameter "?utm_source=your_app_name&utm_medium=referral"
 					 */
+					//TODO: ADD REFERRAL PARAMETER when not in development
 					imagePaths.Add(new SearchImage() {
 						LocalThumbPath = file,
 						FullImgUrl = jsonObj["results"][i]["preview_photos"][0]["urls"]["regular"].ToString(),
@@ -113,6 +88,35 @@ namespace SlideItHelper
 				}
 			}
 			imageSelections.ItemsSource = imagePaths;
+		}
+
+		private JObject GetUnsplashImgList(string query)
+		{
+			//Get environment variable from .env file (needs to be in same folder as .exe)
+			string access_key = Environment.GetEnvironmentVariable("UNSPLASH_ACCESS_KEY");
+
+			JObject jsonObj = new JObject();
+			var client = new RestClient("https://api.unsplash.com");
+			int resultsPerPage = 10;
+			string serialQuery = JsonConvert.SerializeObject(query);
+			string reqString = "search/collections?query=" + serialQuery
+				+ "&per_page=" + resultsPerPage
+				+ "&client_id=" + access_key;
+			var request = new RestRequest(reqString, Method.GET);
+
+			////Unsplash API Request
+			try
+			{
+				IRestResponse response = client.Execute(request);
+				var content = response.Content;
+				jsonObj = JObject.Parse(content);
+			}
+			catch (Exception err)
+			{
+				Console.WriteLine("Error fetching images from web: " + err.Message);
+			}
+
+			return jsonObj;
 		}
 
 		private void Button_Click(object sender, RoutedEventArgs e)
