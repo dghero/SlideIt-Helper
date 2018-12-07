@@ -78,6 +78,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="SimpleJson.cs" />
+    <Compile Include="Classes\TempFile.cs" />
     <Page Include="AddImagesForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

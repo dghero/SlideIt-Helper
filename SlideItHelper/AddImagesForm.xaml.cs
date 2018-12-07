@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SlideItHelper.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 
 using System.Json;
+
 
 namespace SlideItHelper
 {
@@ -65,7 +67,7 @@ namespace SlideItHelper
 					string url = jsonObj["results"][i]["preview_photos"][0]["urls"]["small"].ToString();
 
 					//fetch thumbnail as a displayable file
-					string file = CreateTmpFile();
+					string file = TempFile.CreateTmpFile();
 					var clientSmall = new RestClient(url);
 					var requestSmall = new RestRequest("", Method.GET);
 					clientSmall.DownloadData(requestSmall).SaveAs(file);
@@ -122,74 +124,6 @@ namespace SlideItHelper
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
 		
-		}
-
-		/* TEMPFILE FUNCTIONS
-		 * Graciously lifted from
-		 * http://www.daveoncsharp.com/2009/09/how-to-use-temporary-files-in-csharp/
-		 */
-
-		private static string CreateTmpFile()
-		{
-			string fileName = string.Empty;
-
-			try
-			{
-				// Get the full name of the newly created Temporary file. 
-				// Note that the GetTempFileName() method actually creates
-				// a 0-byte file and returns the name of the created file.
-				fileName = System.IO.Path.GetTempFileName();
-
-				// Craete a FileInfo object to set the file's attributes
-				FileInfo fileInfo = new FileInfo(fileName);
-
-				// Set the Attribute property of this file to Temporary. 
-				// Although this is not completely necessary, the .NET Framework is able 
-				// to optimize the use of Temporary files by keeping them cached in memory.
-				fileInfo.Attributes = FileAttributes.Temporary;
-
-				//Console.WriteLine("TEMP file created at: " + fileName);
-			}
-			catch (Exception ex)
-			{
-				//Console.WriteLine("Unable to create TEMP file or set its attributes: " + ex.Message);
-			}
-
-			return fileName;
-		}
-
-		private static void UpdateTmpFile(string tmpFile, dynamic data)
-		{
-			try
-			{
-				// Write to the temp file.
-				StreamWriter streamWriter = File.AppendText(tmpFile);
-				streamWriter.WriteLine(data);
-				streamWriter.Flush();
-				streamWriter.Close();
-				//Console.WriteLine("TEMP file updated.");
-			}
-			catch (Exception ex)
-			{
-				//Console.WriteLine("Error writing to TEMP file: " + ex.Message);
-			}
-		}
-
-		private static void DeleteTmpFile(string tmpFile)
-		{
-			try
-			{
-				// Delete the temp file (if it exists)
-				if (File.Exists(tmpFile))
-				{
-					File.Delete(tmpFile);
-					//Console.WriteLine("TEMP file deleted.");
-				}
-			}
-			catch (Exception ex)
-			{
-				//Console.WriteLine("Error deleteing TEMP file: " + ex.Message);
-			}
 		}
 
 	}
