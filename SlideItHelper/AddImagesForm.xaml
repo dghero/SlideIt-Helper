@@ -30,16 +30,36 @@
 				Slide Images
 			</Label>
 
-			<Grid Grid.Column="0" Grid.Row="2" Margin="40">
+			<Grid Grid.Column="0" Grid.Row="2" Margin="40,10,40,40">
 
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition />
+					
 				</Grid.ColumnDefinitions>
 				<Grid.RowDefinitions>
 					<RowDefinition  />
 					<RowDefinition Height="Auto"/>
 				</Grid.RowDefinitions>
 
+				<Grid Name="imageGrid">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition />
+						<ColumnDefinition />
+						<ColumnDefinition />
+						<ColumnDefinition />
+						<ColumnDefinition />
+
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition  />
+						<RowDefinition  />
+						<RowDefinition Height="10" />
+					</Grid.RowDefinitions>
+					<Image Grid.Column="0" Source="C:\Users\Cripple-Supreme\AppData\Local\Temp\tmp4CE0.tmp"></Image>
+					<Image Grid.Column="1" Source="C:\Users\Cripple-Supreme\AppData\Local\Temp\tmp4DBC.tmp"></Image>
+					
+				</Grid>
+				
 				<Button 
 					Grid.Column="0" 
 					Grid.Row="1" 
