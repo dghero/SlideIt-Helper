@@ -1,0 +1,54 @@
+﻿<Page x:Class="SlideItHelper.DisplaySlide"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SlideItHelper"
+      mc:Ignorable="d" 
+      d:DesignHeight="768" d:DesignWidth="1024"
+      Title="DisplaySlide">
+
+    <Grid>
+		<Grid.Background>
+			<ImageBrush ImageSource="background.jpg" />
+		</Grid.Background>
+
+		<Grid Style="{StaticResource pageMargins}">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition />
+			</Grid.RowDefinitions>
+
+			<Label 
+				Name="displayTitle"
+				Grid.Column="0"
+				Grid.Row="0"
+				Style="{StaticResource slideItTitleLabel}"
+				FontSize="70">
+				
+			</Label>
+
+			<Grid Grid.Column="0" Grid.Row="2" Margin="40">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition />
+				</Grid.RowDefinitions>
+
+				<FlowDocumentScrollViewer 
+					IsToolBarVisible="False" 
+					Name="displaySlideContent"
+					VerticalScrollBarVisibility="Hidden"	
+				/>
+
+			</Grid>
+			
+		</Grid>
+
+	</Grid>
+</Page>

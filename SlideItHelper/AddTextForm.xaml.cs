@@ -28,11 +28,13 @@ namespace SlideItHelper
 
 		private void Next_Page(object sender, RoutedEventArgs e)
 		{
-			string searchQuery = this.titleText.Text 
+			string titlePlainText = this.titleText.Text;
+			RichTextBox contentRichText = this.contentText;
+			string searchQuery = titlePlainText
 				+ " " 
-				+ BoldedTextFromRichTextBox(this.contentText);
+				+ BoldedTextFromRichTextBox(contentRichText);
 
-			AddImagesForm addImagesForm = new AddImagesForm(searchQuery);
+			AddImagesForm addImagesForm = new AddImagesForm(searchQuery, titlePlainText, contentRichText);
 			this.NavigationService.Navigate(addImagesForm);
 		}
 

@@ -15,7 +15,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using System.Diagnostics;
-using System.IO;
 
 using RestSharp;
 using RestSharp.Extensions;
@@ -32,27 +31,16 @@ namespace SlideItHelper
 	/// </summary>
 	public partial class AddImagesForm : Page
 	{
-		private string searchTerm;
+		private string slideTitle;
+		private RichTextBox slideContent;
 		private List<SearchImage> imagePaths = new List<SearchImage>();
 
-		public AddImagesForm(string searchTerm)
+		public AddImagesForm(string searchTerm, string slideTitle, RichTextBox slideContent)
 		{
-			this.searchTerm = searchTerm;
+			this.slideTitle = slideTitle;
+			this.slideContent = slideContent;
 			InitializeComponent();
 			GetImages(searchTerm);
-		}
-
-		public class SearchImage
-		{
-			public string LocalThumbPath { get; set; }
-			public string Description { get; set; }
-			public string FullImgUrl { get; set; }
-			public string Photographer { get; set; }
-			public string PhotographerProfile { get; set; }
-			public override string ToString()
-			{
-				return this.Description;
-			}
 		}
 
 		private void GetImages(string query)
@@ -64,27 +52,27 @@ namespace SlideItHelper
 			{
 				try
 				{
-					string url = jsonObj["results"][i]["urls"]["small"].ToString();
-
-					//fetch thumbnail as a displayable file
-					string file = TempFile.CreateTmpFile();
-					var clientSmall = new RestClient(url);
-					var requestSmall = new RestRequest("", Method.GET);
-					clientSmall.DownloadData(requestSmall).SaveAs(file);
-
 					/* Add image profile to list. Note that Unsplash's user policy requires crediting
-					 * Unsplash, the original photographer, and linking their profile with a referral
-					 * parameter "?utm_source=your_app_name&utm_medium=referral"
+					 * Unsplash, the original photographer, and linking their profile. Unsplash
+					 * further requires you to use direct hotlinks for all images, and that all links
+					 * to Unsplash use the parameter "?utm_source=your_app_name&utm_medium=referral".
+					 * 
+					 * See https://medium.com/unsplash/unsplash-api-guidelines-attribution-4d433941d777
+					 * for more details.
 					 */
-					//TODO: ADD REFERRAL PARAMETER when out of development
-					imagePaths.Add(new SearchImage()
+					//// TODO: ADD REFERRAL PARAMETER when out of development. Check desired format
+					//// for parameter
+					SearchImage newImg = new SearchImage()
 					{
-						LocalThumbPath = file,
 						Description = jsonObj["results"][i]["description"].ToString(),
-						FullImgUrl = jsonObj["results"][i]["urls"]["regular"].ToString(),
-						Photographer = jsonObj["results"][i]["user"]["name"].ToString(),
+						ThumbImgUrl = jsonObj["results"][i]["urls"]["small"].ToString(), // + "?utm_source=SlideIt%20Helper&utm_medium=referral"
+						FullImgUrl = jsonObj["results"][i]["urls"]["regular"].ToString(), // + "?utm_source=SlideIt%20Helper&utm_medium=referral"
+						Photographer = jsonObj["results"][i]["user"]["name"].ToString(), // + "?utm_source=SlideIt%20Helper&utm_medium=referral"
 						PhotographerProfile = jsonObj["results"][i]["user"]["links"]["html"].ToString() // + "?utm_source=SlideIt%20Helper&utm_medium=referral"
-					});
+					};
+					newImg.DownloadThumbTempFile();
+
+					imagePaths.Add(newImg);
 				}
 				catch (Exception err)
 				{
@@ -123,27 +111,31 @@ namespace SlideItHelper
 			return jsonObj;
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e)
+		private void Button_Next(object sender, RoutedEventArgs e)
 		{
-			List<SearchImage> allItems = new List<SearchImage>();
-			List<SearchImage> selected = new List<SearchImage>();
+			List<SearchImage> allImages = new List<SearchImage>();
+			List<SearchImage> selectedImages = new List<SearchImage>();
 
 			foreach(SearchImage item in imageSelections.Items)
 			{
-				allItems.Add(item);
+				allImages.Add(item);
 			}
 			foreach(SearchImage item in imageSelections.SelectedItems)
 			{
-				selected.Add(item);
+				selectedImages.Add(item);
 			}
 
-			imageSelections.ItemsSource = null;
-			foreach (SearchImage item in allItems)
-			{
-				TempFile.DeleteTmpFile(item.LocalThumbPath);
-			}
+			//// TODO: Can't delete resources in use... 
+			//// Find a way to clear on this page, or just delete next page
+			//imageSelections.ItemsSource = null;
+			//foreach (SearchImage item in allItems)
+			//{
+			//	TempFile.DeleteTmpFile(item.LocalThumbPath);
+			//}
 
-			Debug.WriteLine("with the Resto");
+			////Send... Title, Content, image urls
+			DisplaySlide displaySlide = new DisplaySlide(this.slideTitle, this.slideContent, selectedImages);
+			this.NavigationService.Navigate(displaySlide);
 		}
 
 	}

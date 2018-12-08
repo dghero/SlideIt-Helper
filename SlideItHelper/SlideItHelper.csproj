@@ -77,6 +77,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\ImageUtils.cs" />
+    <Compile Include="DisplaySlide.xaml.cs">
+      <DependentUpon>DisplaySlide.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SimpleJson.cs" />
     <Compile Include="Classes\TempFile.cs" />
     <Page Include="AddImagesForm.xaml">
@@ -84,6 +88,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddTextForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DisplaySlide.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

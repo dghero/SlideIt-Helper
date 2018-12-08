@@ -88,7 +88,7 @@
 				<Button 
 					Grid.Column="0" 
 					Grid.Row="3" 
-					Click="Button_Click" 
+					Click="Button_Next" 
 					Style="{StaticResource buttonStyle}"
 				>
 					Generate Slide

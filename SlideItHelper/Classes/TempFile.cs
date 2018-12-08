@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 using System.IO;
 
 namespace SlideItHelper.Classes
-{
+{ 
+
 	class TempFile
 	{
 		/* TEMPFILE FUNCTIONS
