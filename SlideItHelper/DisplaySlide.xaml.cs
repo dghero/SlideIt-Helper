@@ -29,8 +29,8 @@ namespace SlideItHelper
 
 		private class DisplayImage : SearchImage
 		{
-			public int ImgIdx;
-			public int ImgHeight;
+			public int ImgIdx { get; set; }
+			public int ImgHeight { get; set; }
 			public void CopyValsFromParent(SearchImage parent)
 			{
 				this.LocalThumbPath = parent.LocalThumbPath;
@@ -76,7 +76,7 @@ namespace SlideItHelper
 		{
 			List<DisplayImage> displayImages = new List<DisplayImage>();
 
-			int baseHeight = 400;
+			int baseHeight = 500;
 			for(int i = 0; i < images.Count; i++)
 			{
 				//imgGrid.RowDefinitions.Add(new RowDefinition());
@@ -84,11 +84,11 @@ namespace SlideItHelper
 				images[i].DownloadFullTempFile();
 				DisplayImage dispImg = new DisplayImage();
 				dispImg.CopyValsFromParent(images[i]);
-				dispImg.ImgIdx = i;
 				dispImg.ImgHeight = baseHeight / images.Count;
 
 				displayImages.Add(dispImg);
 			}
+			
 			stackImages.ItemsSource = displayImages;
 		}
 		

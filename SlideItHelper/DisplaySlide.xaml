@@ -33,8 +33,9 @@
 
 			<Grid Grid.Column="0" Grid.Row="2" Margin="40">
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition />
-					<ColumnDefinition />
+					<ColumnDefinition Width="3*"/>
+					<ColumnDefinition Width="20" />
+					<ColumnDefinition Width="2*"/>
 				</Grid.ColumnDefinitions>
 				<Grid.RowDefinitions>
 					<RowDefinition />
@@ -47,12 +48,12 @@
 					VerticalScrollBarVisibility="Hidden"	
 				/>
 
-				<Grid Grid.Column="1" Name="imgGrid">
+				<Grid Grid.Column="2" Name="imgGrid">
 
 					<ItemsControl Name="stackImages">
 						<ItemsControl.ItemTemplate>
 							<DataTemplate>
-								<Grid Height="{Binding ImgHeight}" Margin="5">
+								<Grid Height="{Binding ImgHeight, Mode=TwoWay}" Margin="5">
 									<Image 
 										HorizontalAlignment="Center" 
 										VerticalAlignment="Center"
