@@ -41,10 +41,34 @@
 				</Grid.RowDefinitions>
 
 				<FlowDocumentScrollViewer 
+					Grid.Column="0"
 					IsToolBarVisible="False" 
 					Name="displaySlideContent"
 					VerticalScrollBarVisibility="Hidden"	
 				/>
+
+				<Grid Grid.Column="1" Name="imgGrid">
+
+					<ItemsControl Name="stackImages">
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<Grid Height="{Binding ImgHeight}" Margin="5">
+									<Image 
+										HorizontalAlignment="Center" 
+										VerticalAlignment="Center"
+										MaxHeight="{Binding RelativeSource={RelativeSource FindAncestor, 
+												AncestorType={x:Type Grid}},Path=ActualHeight}"
+									>
+										<Image.Source>
+											<BitmapImage UriSource="{Binding LocalFullPath}" CacheOption="OnLoad" />
+										</Image.Source>
+									</Image>
+								</Grid>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+
+					</ItemsControl>
+				</Grid>
 
 			</Grid>
 			

@@ -26,11 +26,30 @@ namespace SlideItHelper
 	/// </summary>
 	public partial class DisplaySlide : Page
 	{
+
+		private class DisplayImage : SearchImage
+		{
+			public int ImgIdx;
+			public int ImgHeight;
+			public void CopyValsFromParent(SearchImage parent)
+			{
+				this.LocalThumbPath = parent.LocalThumbPath;
+				this.LocalFullPath = parent.LocalFullPath;
+				this.Description = parent.Description;
+				this.ThumbImgUrl = parent.ThumbImgUrl;
+				this.FullImgUrl = parent.FullImgUrl;
+				this.Photographer = parent.Photographer;
+				this.PhotographerProfile = parent.PhotographerProfile;
+			}
+		}
+
 		public DisplaySlide(string slideTitle, RichTextBox slideContent, List<SearchImage> images)
 		{
 			InitializeComponent();
 			PopulateTitle(slideTitle);
 			PopulateContent(slideContent);
+			PopulateImages(images);
+
 		}
 
 		private void PopulateTitle(string titleText)
@@ -51,6 +70,26 @@ namespace SlideItHelper
 			XamlWriter.Save(slideContent.Document, ms);
 			ms.Seek(0, SeekOrigin.Begin);
 			displaySlideContent.Document = XamlReader.Load(ms) as FlowDocument;
+		}
+
+		private void PopulateImages(List<SearchImage> images)
+		{
+			List<DisplayImage> displayImages = new List<DisplayImage>();
+
+			int baseHeight = 400;
+			for(int i = 0; i < images.Count; i++)
+			{
+				//imgGrid.RowDefinitions.Add(new RowDefinition());
+
+				images[i].DownloadFullTempFile();
+				DisplayImage dispImg = new DisplayImage();
+				dispImg.CopyValsFromParent(images[i]);
+				dispImg.ImgIdx = i;
+				dispImg.ImgHeight = baseHeight / images.Count;
+
+				displayImages.Add(dispImg);
+			}
+			stackImages.ItemsSource = displayImages;
 		}
 		
 	}

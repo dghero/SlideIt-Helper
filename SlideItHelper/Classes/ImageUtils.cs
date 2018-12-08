@@ -27,12 +27,19 @@ namespace SlideItHelper.Classes
 
 		public string DownloadThumbTempFile()
 		{
-			return this.LocalThumbPath = this.ApiDownloadImg(this.ThumbImgUrl);
-			
+			if (this.LocalThumbPath == null)
+			{
+				this.LocalThumbPath = this.ApiDownloadImg(this.ThumbImgUrl);
+			}
+			return this.LocalThumbPath;
 		}
 		public string DownloadFullTempFile()
 		{
-			return this.LocalFullPath = this.ApiDownloadImg(this.FullImgUrl);
+			if(this.LocalFullPath == null)
+			{
+				this.LocalFullPath = this.ApiDownloadImg(this.FullImgUrl);
+			}
+			return this.LocalFullPath;
 		}
 
 		private string ApiDownloadImg(string url)

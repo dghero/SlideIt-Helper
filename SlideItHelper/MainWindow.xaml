@@ -5,5 +5,5 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SlideItHelper"
         mc:Ignorable="d"
-        Title="SlideIt Helper" Height="600" Width="800" Source="AddTextForm.xaml">
+        Title="SlideIt Helper" Height="768" Width="1024" Source="AddTextForm.xaml">
 </NavigationWindow>
