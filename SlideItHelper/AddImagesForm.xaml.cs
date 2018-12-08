@@ -33,7 +33,7 @@ namespace SlideItHelper
 	{
 		private string slideTitle;
 		private RichTextBox slideContent;
-		private List<SearchImage> imagePaths = new List<SearchImage>();
+		private List<SearchImage> images = new List<SearchImage>();
 
 		public AddImagesForm(string searchTerm, string slideTitle, RichTextBox slideContent)
 		{
@@ -72,14 +72,14 @@ namespace SlideItHelper
 					};
 					newImg.DownloadThumbTempFile();
 
-					imagePaths.Add(newImg);
+					images.Add(newImg);
 				}
 				catch (Exception err)
 				{
 					Console.WriteLine("Error adding image to list: " + err.Message);
 				}
 			}
-			imageSelections.ItemsSource = imagePaths;
+			imageOptions.ItemsSource = images;
 		}
 
 		private JObject GetUnsplashImgList(string query)
@@ -116,24 +116,15 @@ namespace SlideItHelper
 			List<SearchImage> allImages = new List<SearchImage>();
 			List<SearchImage> selectedImages = new List<SearchImage>();
 
-			foreach(SearchImage item in imageSelections.Items)
+			foreach (SearchImage img in imageOptions.Items) 
 			{
-				allImages.Add(item);
+				img.DeleteThumbTempFile();
 			}
-			foreach(SearchImage item in imageSelections.SelectedItems)
+			foreach (SearchImage img in imageOptions.SelectedItems)
 			{
-				selectedImages.Add(item);
+				selectedImages.Add(img);
 			}
 
-			//// TODO: Can't delete resources in use... 
-			//// Find a way to clear on this page, or just delete next page
-			//imageSelections.ItemsSource = null;
-			//foreach (SearchImage item in allItems)
-			//{
-			//	TempFile.DeleteTmpFile(item.LocalThumbPath);
-			//}
-
-			////Send... Title, Content, image urls
 			DisplaySlide displaySlide = new DisplaySlide(this.slideTitle, this.slideContent, selectedImages);
 			this.NavigationService.Navigate(displaySlide);
 		}

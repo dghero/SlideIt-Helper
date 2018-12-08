@@ -24,6 +24,7 @@ namespace SlideItHelper.Classes
 		{
 			return this.Description;
 		}
+
 		public string DownloadThumbTempFile()
 		{
 			return this.LocalThumbPath = this.ApiDownloadImg(this.ThumbImgUrl);
@@ -41,6 +42,17 @@ namespace SlideItHelper.Classes
 			var requestSmall = new RestRequest("", Method.GET);
 			clientSmall.DownloadData(requestSmall).SaveAs(file);
 			return file;
+		}
+
+		public void DeleteThumbTempFile()
+		{
+			TempFile.DeleteTmpFile(this.LocalThumbPath);
+			this.LocalThumbPath = null;
+		}
+		public void DeleteFullTempFile()
+		{
+			TempFile.DeleteTmpFile(this.LocalFullPath);
+			this.LocalFullPath = null;
 		}
 	}
 	

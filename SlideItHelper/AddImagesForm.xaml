@@ -53,7 +53,7 @@
 					</Grid.RowDefinitions>
 
 					<ListBox 
-						Name="imageSelections" 
+						Name="imageOptions" 
 						SelectionMode="Multiple" 
 						ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 					>
@@ -66,11 +66,15 @@
 							<DataTemplate>
 								<Grid Height="150" Width="150" VerticalAlignment="Center">
 									<Image
-										Source="{Binding LocalThumbPath}" 
 										HorizontalAlignment="Center" 
 										VerticalAlignment="Center"
 										MaxHeight="150" 
-										MaxWidth="150"/>
+										MaxWidth="150"
+									>
+										<Image.Source>
+											<BitmapImage UriSource="{Binding LocalThumbPath}" CacheOption="OnLoad" />
+										</Image.Source>	
+									</Image>
 								</Grid>
 							</DataTemplate>
 						</ListBox.ItemTemplate>
