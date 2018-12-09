@@ -53,16 +53,17 @@ namespace SlideItHelper
 			PopulateImages(images);
 		}
 
+		public void CleanUpImages()
+		{
+			foreach (DisplayImage img in this.displayImages)
+			{
+				img.DeleteFullTempFile();
+			}
+		}
+
 		private void PopulateTitle(string titleText)
 		{
-			if(titleText.Length > 0)
-			{
-				displayTitle.Content = titleText;
-			}
-			else
-			{
-				displayTitle.Content = "Slide"; //or do I want to keep it empty?
-			}
+			displayTitle.Content = titleText;
 		}
 
 		private void PopulateContent(RichTextBox slideContent)

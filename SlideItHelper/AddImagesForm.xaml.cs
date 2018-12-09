@@ -148,6 +148,7 @@ namespace SlideItHelper
 					png.Save(stm);
 				}
 			}
+			displaySlide.CleanUpImages();
 			//this.NavigationService.Navigate(displaySlide);
 		}
 

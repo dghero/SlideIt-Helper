@@ -70,7 +70,7 @@ namespace SlideItHelper.Classes
 				if (File.Exists(tmpFile))
 				{
 					File.Delete(tmpFile);
-					Console.WriteLine("TEMP file deleted.");
+					//Console.WriteLine("TEMP file deleted.");
 				}
 			}
 			catch (Exception ex)
