@@ -89,9 +89,10 @@ namespace SlideItHelper
 
 			JObject jsonObj = new JObject();
 			var client = new RestClient("https://api.unsplash.com");
-			int resultsPerPage = 3;
+			int resultsPerPage = 30;
 			string serialQuery = JsonConvert.SerializeObject(query);
 			string reqString = "search/photos?query=" + serialQuery
+				+ "&page=" + 1
 				+ "&per_page=" + resultsPerPage
 				+ "&client_id=" + access_key;
 			var request = new RestRequest(reqString, Method.GET);
