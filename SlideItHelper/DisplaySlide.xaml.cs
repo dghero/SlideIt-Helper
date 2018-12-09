@@ -43,13 +43,14 @@ namespace SlideItHelper
 			}
 		}
 
+		List<DisplayImage> displayImages;
+
 		public DisplaySlide(string slideTitle, RichTextBox slideContent, List<SearchImage> images)
 		{
 			InitializeComponent();
 			PopulateTitle(slideTitle);
 			PopulateContent(slideContent);
 			PopulateImages(images);
-
 		}
 
 		private void PopulateTitle(string titleText)
@@ -70,11 +71,12 @@ namespace SlideItHelper
 			XamlWriter.Save(slideContent.Document, ms);
 			ms.Seek(0, SeekOrigin.Begin);
 			displaySlideContent.Document = XamlReader.Load(ms) as FlowDocument;
+			displaySlideContent.Document.FontSize = 26;
 		}
 
 		private void PopulateImages(List<SearchImage> images)
 		{
-			List<DisplayImage> displayImages = new List<DisplayImage>();
+			displayImages = new List<DisplayImage>();
 
 			int baseHeight = 500;
 			for(int i = 0; i < images.Count; i++)
@@ -90,6 +92,7 @@ namespace SlideItHelper
 			}
 			
 			stackImages.ItemsSource = displayImages;
+			
 		}
 		
 	}

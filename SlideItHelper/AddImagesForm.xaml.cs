@@ -21,8 +21,8 @@ using RestSharp.Extensions;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 
-using System.Json;
-
+using Microsoft.Win32;
+using System.IO;
 
 namespace SlideItHelper
 {
@@ -126,7 +126,29 @@ namespace SlideItHelper
 			}
 
 			DisplaySlide displaySlide = new DisplaySlide(this.slideTitle, this.slideContent, selectedImages);
-			this.NavigationService.Navigate(displaySlide);
+
+			SaveFileDialog sfd = new SaveFileDialog();
+			sfd.Filter = "Png Files(*.png)|*.png";
+
+			Nullable<bool> result = sfd.ShowDialog();
+			string fileName = "";
+
+			if (result == true)
+			{
+				fileName = sfd.FileName;
+				Size size = new Size(1024, 768);
+				RenderTargetBitmap rtb = new RenderTargetBitmap((int)size.Width, (int)size.Height, 96, 96, PixelFormats.Pbgra32);
+				displaySlide.Measure(size);
+				displaySlide.Arrange(new Rect(size));
+				rtb.Render(displaySlide);
+				PngBitmapEncoder png = new PngBitmapEncoder();
+				png.Frames.Add(BitmapFrame.Create(rtb));
+				using (Stream stm = File.Create(fileName))
+				{
+					png.Save(stm);
+				}
+			}
+			//this.NavigationService.Navigate(displaySlide);
 		}
 
 	}
