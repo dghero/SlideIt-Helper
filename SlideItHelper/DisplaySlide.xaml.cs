@@ -79,7 +79,7 @@ namespace SlideItHelper
 		{
 			displayImages = new List<DisplayImage>();
 
-			int baseHeight = 500;
+			int baseHeight = 450;
 			for(int i = 0; i < images.Count; i++)
 			{
 				//imgGrid.RowDefinitions.Add(new RowDefinition());

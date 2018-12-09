@@ -54,16 +54,23 @@
 						<ItemsControl.ItemTemplate>
 							<DataTemplate>
 								<Grid Height="{Binding ImgHeight, Mode=TwoWay}" Margin="0,0,0,5">
+									<Grid.RowDefinitions>
+										<RowDefinition />
+										<RowDefinition Height="Auto"/>
+										<RowDefinition Height="Auto"/>
+									</Grid.RowDefinitions>
 									<Image 
-										HorizontalAlignment="Center" 
-										VerticalAlignment="Center"
-										MaxHeight="{Binding RelativeSource={RelativeSource FindAncestor, 
-												AncestorType={x:Type Grid}},Path=ActualHeight}"
+										Grid.Row="0"
+										HorizontalAlignment="Right" 
 									>
 										<Image.Source>
 											<BitmapImage UriSource="{Binding LocalFullPath}" CacheOption="OnLoad" />
 										</Image.Source>
 									</Image>
+									
+									<TextBlock Grid.Row="1" Style="{StaticResource imageCredits}" Text="{Binding Photographer}"/>
+									<TextBlock Grid.Row="2" Style="{StaticResource imageCredits}" Text="{Binding PhotographerProfile}" />
+									
 								</Grid>
 							</DataTemplate>
 						</ItemsControl.ItemTemplate>

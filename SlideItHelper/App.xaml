@@ -61,5 +61,13 @@
 			<Setter Property="Label.FontFamily" Value="Cambria" />
 			<Setter Property="Label.Foreground" Value="#0F0F4C" />
 		</Style>
+		
+		<!--DisplayForm Stylings-->
+		<Style x:Key="imageCredits">
+			<Setter Property="Label.FontSize" Value="10"/>
+			<Setter Property="Label.FontFamily" Value="Cambria" />
+			<Setter Property="Label.Foreground" Value="#0F0F4C" />
+			<Setter Property="Label.HorizontalAlignment" Value="Right" />
+		</Style>
 	</Application.Resources>
 </Application>
