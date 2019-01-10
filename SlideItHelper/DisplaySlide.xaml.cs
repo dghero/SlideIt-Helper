@@ -35,11 +35,11 @@ namespace SlideItHelper
 			{
 				this.LocalThumbPath = parent.LocalThumbPath;
 				this.LocalFullPath = parent.LocalFullPath;
-				this.Description = parent.Description;
+				//this.Description = parent.Description;
 				this.ThumbImgUrl = parent.ThumbImgUrl;
 				this.FullImgUrl = parent.FullImgUrl;
 				this.Photographer = parent.Photographer;
-				this.PhotographerProfile = parent.PhotographerProfile;
+				//this.PhotographerProfile = parent.PhotographerProfile;
 			}
 		}
 

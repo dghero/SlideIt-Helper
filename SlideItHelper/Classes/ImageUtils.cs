@@ -15,15 +15,15 @@ namespace SlideItHelper.Classes
 	{
 		public string LocalThumbPath { get; set; }
 		public string LocalFullPath { get; set; }
-		public string Description { get; set; }
+		//public string Description { get; set; }
 		public string ThumbImgUrl { get; set; }
 		public string FullImgUrl { get; set; }
 		public string Photographer { get; set; }
-		public string PhotographerProfile { get; set; }
-		public override string ToString()
-		{
-			return this.Description;
-		}
+		//public string PhotographerProfile { get; set; }
+		//public override string ToString()
+		//{
+		//	return this.Description;
+		//}
 
 		public string DownloadThumbTempFile()
 		{

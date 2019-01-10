@@ -69,7 +69,7 @@
 									</Image>
 									
 									<TextBlock Grid.Row="1" Style="{StaticResource imageCredits}" Text="{Binding Photographer}"/>
-									<TextBlock Grid.Row="2" Style="{StaticResource imageCredits}" Text="{Binding PhotographerProfile}" />
+									<!--<TextBlock Grid.Row="2" Style="{StaticResource imageCredits}" Text="{Binding PhotographerProfile}" />-->
 									
 								</Grid>
 							</DataTemplate>

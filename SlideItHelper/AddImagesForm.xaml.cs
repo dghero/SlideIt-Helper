@@ -45,30 +45,21 @@ namespace SlideItHelper
 
 		private void GetImages(string query)
 		{
-			JObject jsonObj = GetUnsplashImgList(query);
+			JObject jsonObj = GetImgListFromAPI(query);
 
-			JArray jsonArr = (JArray)jsonObj["results"];
+			JArray jsonArr = (JArray)jsonObj["photos"];
 			for (var i = 0; i < jsonArr.Count; i++)
 			{
 				try
 				{
-					/* Add image profile to list. Note that Unsplash's user policy requires crediting
-					 * Unsplash, the original photographer, and linking their profile. Unsplash
-					 * further requires you to use direct hotlinks for all images, and that all links
-					 * to Unsplash use the parameter "?utm_source=your_app_name&utm_medium=referral".
-					 * 
-					 * See https://medium.com/unsplash/unsplash-api-guidelines-attribution-4d433941d777
-					 * for more details.
-					 */
-					//// TODO: ADD REFERRAL PARAMETER when out of development. Check desired format
-					//// for parameter
 					SearchImage newImg = new SearchImage()
 					{
-						Description = jsonObj["results"][i]["description"].ToString(),
-						ThumbImgUrl = jsonObj["results"][i]["urls"]["small"].ToString(), // + "?utm_source=SlideIt%20Helper&utm_medium=referral"
-						FullImgUrl = jsonObj["results"][i]["urls"]["regular"].ToString(), // + "?utm_source=SlideIt%20Helper&utm_medium=referral"
-						Photographer = jsonObj["results"][i]["user"]["name"].ToString(), // + "?utm_source=SlideIt%20Helper&utm_medium=referral"
-						PhotographerProfile = jsonObj["results"][i]["user"]["links"]["html"].ToString() // + "?utm_source=SlideIt%20Helper&utm_medium=referral"
+						// When this was with the Unsplash API, the response object was far too large and
+						// unwieldy to mock up the object as a class. The response object is much smaller
+						// now, but I want to fix this ASAP
+						ThumbImgUrl = jsonArr[i]["src"]["tiny"].ToString(), 
+						FullImgUrl = jsonArr[i]["src"]["original"].ToString(), 
+						Photographer = "Photo by " + jsonArr[i]["photographer"].ToString() + " on Pexels"
 					};
 					newImg.DownloadThumbTempFile();
 
@@ -82,22 +73,24 @@ namespace SlideItHelper
 			imageOptions.ItemsSource = images;
 		}
 
-		private JObject GetUnsplashImgList(string query)
+		private JObject GetImgListFromAPI(string query)
 		{
 			//Get environment variable from .env file (needs to be in same folder as .exe)
-			string access_key = Environment.GetEnvironmentVariable("UNSPLASH_ACCESS_KEY");
+			string accessKey = Environment.GetEnvironmentVariable("PEXELS_ACCESS_KEY");
 
 			JObject jsonObj = new JObject();
-			var client = new RestClient("https://api.unsplash.com");
-			int resultsPerPage = 30;
+			var client = new RestClient("https://api.pexels.com/v1");
+			int resultsPerPage = 60;
 			string serialQuery = JsonConvert.SerializeObject(query);
-			string reqString = "search/photos?query=" + serialQuery
-				+ "&page=" + 1
-				+ "&per_page=" + resultsPerPage
-				+ "&client_id=" + access_key;
-			var request = new RestRequest(reqString, Method.GET);
 
-			////Unsplash API Request
+			string reqString = 
+				"search?query=" + serialQuery
+				+ "&per_page=" + resultsPerPage;
+
+			var request = new RestRequest(reqString, Method.GET);
+			request.AddHeader("Authorization", accessKey);
+				
+			////Pixabay API Request
 			try
 			{
 				IRestResponse response = client.Execute(request);
